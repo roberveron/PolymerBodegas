@@ -1,0 +1,35 @@
+<script>
+FirebaseBehavior = {
+  properties: {
+    fbapp: {
+      type: Object,
+      value: function() {
+        return this.getFbapp();
+      }
+    }
+  },
+  getFbapp: function() {
+    return document.createElement('iron-meta').byKey('fbapp');
+  },
+  
+  fbref: function(ruta) {
+    if(!this.fbapp) {
+      this.fbapp = this.getFbapp();
+    }
+    return this.fbapp.database().ref(ruta);
+  },
+  // USERS
+  fb__bodegasAll: function() {
+    return '/bodegas';
+  },
+  fb__bodegasOne: function(id) {
+    return this.fb__bodegasAll() + '/' + id;
+  },
+  fb__chatsAll: function() {
+    return '/chats';
+  },
+  fb__chatsOne: function(id) {
+    return this.fb__chatsAll() + '/' + id;
+  },
+}
+</script>

@@ -1,0 +1,38 @@
+
+<dom-module id="test-chat">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+        
+        <p>
+          [[chat.text]] 
+          <paper-icon-button icon="cancel" on-tap="eliminar"></paper-icon-button>
+          
+          <paper-icon-button icon="create" on-tap="editar"></paper-icon-button>
+          
+        </p>
+
+    </template>
+    <script>
+        Polymer({
+            is: 'test-chat',
+
+            behaviors: [FirebaseBehavior],
+
+            properties: {
+                chat: Object
+            },
+            eliminar: function(){
+                console.log(this.chat)
+                this.fbref(this.fb__chatsOne(this.chat.$key)).remove();
+            },
+            editar: function(){
+                console.log(this.chat)
+                this.fbref(this.fb__chatsOne(this.chat.$key)).set({text: 'prueba'});
+            }
+        });
+    </script>
+</dom-module>
