@@ -56,7 +56,7 @@
           email: email,
           photoURL: photoURL
         };
-        var ref = this.fbref(this.fb__userOne(user.uid));
+       var ref = this.fbref(this.fb__bodegasOne(user.uid));
         ref.once('value', function(ss) {
           if(!ss.val()) {
             //no tengo perfil creado
