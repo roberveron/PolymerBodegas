@@ -11,11 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 
-
-<link rel="import" href="./aprendiendo/test-chat.html">
-
-
-<dom-module id="my-view2">
+<dom-module id="my-promocion">
   <template>
     <style include="shared-styles">
       :host {
@@ -25,40 +21,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <firebase-query
-      id="query"
-      path="/chats"
-      data="{{chats}}">
-    </firebase-query>
-
     <div class="card">
-      <h1>Chats</h1>
-      <template is="dom-repeat" items="[[chats]]">
-        <test-chat chat="[[item]]"></test-chat>
-      </template>
+      <div class="circle">3</div>
+      <h1>View Three</h1>
+      <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
+      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
     </div>
-    
-    <paper-input label="ingrese chat" value="{{text}}"></paper-input>
-    
-    <paper-button raised on-tap="crear">Crear Chat</paper-button>
-    
-    
   </template>
 
   <script>
     Polymer({
-      is: 'my-view2',
-      behaviors: [FirebaseBehavior],
-      
-      properties: {
-        chats: Array, 
-        text: String
-      },
-      crear: function(){
-        this.fbref(this.fb__chatsAll()).push({
-          text: this.text
-        })
-      }
+      is: 'my-promocion',
     });
   </script>
 </dom-module>
