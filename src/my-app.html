@@ -24,25 +24,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- IRON ELEMENTS -->
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../bower_components/iron-dropdown/iron-dropdown.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+
 
 <!-- PAPER ELEMENTS -->
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 
 
+<!-- NEON ANIMATION -->
+<link rel="import" href="../bower_components/neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/slide-down-animation.html">
 
- <!--FIREBASE -->
+<!-- FIREBASE -->
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 
 <!-- BEHAVIORS -->
 <link rel="import" href="behaviors/firebase-behavior.html">
+<link rel="import" href="behaviors/dropdown-behavior.html">
+<link rel="import" href="behaviors/emisor-feedback-behavior.html">
 
 
 <!-- MY ELEMENTS -->
 <link rel="import" href="my-icons.html">
+<!--<link rel="import" href="styles/shared-styles.html">-->
+<!--<link rel="import" href="utils/moment-element.html">-->
 <link rel="import" href="./login/login-users.html">
+
+
+<!--<link rel="import" href="notifications/notification-advisor.html">
+<link rel="import" href="notifications/notification-push-manager.html">-->
+
 
 
 <dom-module id="my-app">
@@ -111,9 +136,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-drawer id="drawer">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="home" href="/home">Inicio</a>
+            <a name="home" href="/home" class="navlink">
+            <iron-icon icon="home"></iron-icon>
+            <span>Home</span>
+          </a>
+          <a name="oferta" href="/oferta" class="navlink">
+            <iron-icon icon="editor:attach-money"></iron-icon>
+            <span>Oferta</span>
+          </a>
+          <a name="promocion" href="/promocion" class="navlink">
+            <iron-icon icon="icons:group-work"></iron-icon>
+            <span>Promocion</span>
+          </a>
+
+
+
+<!--          <a name="home" href="/home">Inicio</a>
           <a name="oferta" href="/oferta">Ofertas</a>
-          <a name="promocion" href="/promocion">Promociones</a>
+          <a name="promocion" href="/promocion">Promociones</a>-->
         </iron-selector>
       </app-drawer>
 
@@ -123,7 +163,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>Prueba Polymer</div>
+            <div main-title>BodegasParaguay</div>
 
             <login-users fbapp="{{fbapp}}" user="{{user}}"></login-users>
               {{userData.name}}
@@ -142,6 +182,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
+
+    <paper-toast id="eltoast"></paper-toast>
+    <paper-toast id="eltoastnegativo"></paper-toast>
   </template>
 
   <script>
