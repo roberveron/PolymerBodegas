@@ -3,7 +3,7 @@
 <link rel="import" href="../styles/dropdown-styles.html">
 <link rel="import" href="../behaviors/dropdown-behavior.html">
 
-<link rel="import" href="../interfaces/imagen-avatar.html">
+<!--<link rel="import" href="../interfaces/imagen-avatar.html">-->
 
 
 
@@ -25,7 +25,10 @@
       }
 
     </style>
-    <imagen-avatar imagen="[[userData.avatar]]" on-tap="abrirDrop"></imagen-avatar>
+    <!--<imagen-avatar imagen="[[userData.avatar]]" on-tap="abrirDrop"></imagen-avatar>-->
+    
+    <paper-icon-button icon="icons:exit-to-app" on-tap="abrirDrop"></paper-icon-button>
+    
 
     <iron-dropdown horizontal-align="right"
       horizontal-align="right"

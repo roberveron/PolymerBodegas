@@ -8,7 +8,6 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
 <!-- APP-ELEMENTS -->
@@ -60,49 +59,88 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!-- MY ELEMENTS -->
 <link rel="import" href="my-icons.html">
-<!--<link rel="import" href="styles/shared-styles.html">-->
-<!--<link rel="import" href="utils/moment-element.html">-->
+<link rel="import" href="styles/shared-styles.html">
+<!--<link rel="import" href="./utils/moment-element.html">-->
 <link rel="import" href="./login/login-users.html">
 
 
-<!--<link rel="import" href="notifications/notification-advisor.html">
-<link rel="import" href="notifications/notification-push-manager.html">-->
+<link rel="import" href="notifications/notification-advisor.html">
+<link rel="import" href="notifications/notification-push-manager.html">
+
 
 
 
 <dom-module id="my-app">
   <template>
     <style>
-      :host {
-        --app-primary-color: #4285f4;
-        --app-secondary-color: black;
+           :host {
+        --dark-primary-color:       #00796B;
+        --primary-color:            #2874A6;
+        --light-primary-color:      #B2DFDB;
+        --text-primary-color:       #FFFFFF;
+        --accent-color:             #00BCD4;
+        --primary-background-color: #D6EAF8;
+        --primary-text-color:       #FFFFFF;
+        --secondary-text-color:     #757575;
+        --disabled-text-color:      #BDBDBD;
+        --divider-color:            #BDBDBD;
+        --app-secondary-color:      black;
 
-        display: block;
+     display: block;
       }
 
       app-header {
         color: #fff;
-        background-color: var(--app-primary-color);
+        background-color: var(--primary-color);
       }
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
+      }
+
+      app-drawer {
+        --app-drawer-content-container: {
+          background-color: var(--primary-background-color);
+        };
       }
 
       .drawer-list {
         margin: 0 20px;
       }
 
-      .drawer-list a {
-        display: block;
+      .navlink {
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
         padding: 0 16px;
         text-decoration: none;
         color: var(--app-secondary-color);
-        line-height: 40px;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 24px;
+        min-height: 48px;
+        padding: 0 16px;
+      }
+      .drawer-list iron-icon {
+        margin-right: 23px;
+        opacity: 0.54;
       }
 
       .drawer-list a.iron-selected {
         color: black;
         font-weight: bold;
+      }
+      
+      #eltoastnegativo{
+        --paper-toast-color: #FFF;
+        --paper-toast-background-color: #f66;
+      }
+      .pie{
+        font-size: .8em;
+        margin: 10px;
+        color: #757575;
+      }
+      .pie a {
+        color: var(--primary-color);
       }
     </style>
 
@@ -117,12 +155,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     
     <iron-meta key="fbapp" value="[[fbapp]]"></iron-meta>
-    
 
+    
     <firebase-document
-      path="/bodegas/{{user.uid}}"
-      data="{{userData}}">
+      path="{{locUser}}"
+      data="{{userData}}"
     </firebase-document>
+
+     <notification-push-manager
+      id="elpush"
+      user="[[user]]"
+    ></notification-push-manager>
+
 
     <app-location route="{{route}}"></app-location>
     <app-route
@@ -134,7 +178,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer id="drawer">
-        <app-toolbar>Menu</app-toolbar>
+        
+        <app-toolbar><iron-icon icon="icons:reorder"></iron-icon>Menu </app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
             <a name="home" href="/home" class="navlink">
             <iron-icon icon="home"></iron-icon>
@@ -149,11 +194,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span>Promocion</span>
           </a>
 
-
-
-<!--          <a name="home" href="/home">Inicio</a>
-          <a name="oferta" href="/oferta">Ofertas</a>
-          <a name="promocion" href="/promocion">Promociones</a>-->
         </iron-selector>
       </app-drawer>
 
@@ -165,8 +205,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <div main-title>BodegasParaguay</div>
 
-            <login-users fbapp="{{fbapp}}" user="{{user}}"></login-users>
-              {{userData.name}}
+            <login-users user="{{user}}"></login-users>
+            <notification-advisor user="{{user}}"></notification-advisor>
           </app-toolbar>
         </app-header>
 
@@ -175,9 +215,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-home name="home"></my-home>
-          <my-oferta name="oferta"></my-oferta>
-          <my-promocion name="promocion"></my-promocion>
+          <my-home user="[[user]]" name="home"></my-home>
+          <my-oferta user="[[user]]" name="oferta"></my-oferta>
+          <my-promocion user="[[user]]" name="promocion"></my-promocion>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
       </app-header-layout>
@@ -185,11 +225,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-toast id="eltoast"></paper-toast>
     <paper-toast id="eltoastnegativo"></paper-toast>
+
+  <memes-crud-borrar-dialogo
+      id="dialogoCrudBorrar"
+    ></memes-crud-borrar-dialogo>
+
   </template>
 
   <script>
     Polymer({
       is: 'my-app',
+
+      behaviors: [FirebaseBehavior],
 
       properties: {
         page: {
@@ -199,15 +246,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         app: Object,
         user: Object,
-        userData: Object
+        userData: Object,
+        locUser: {
+          type: String,
+          computed: 'fb__bodegasOne(user.uid)'
+        }
       },
+
+      listeners: {
+        'feedback-positivo': 'feedbackPositivo',
+        'feedback-negativo': 'feedbackNegativo',
+        'borrar-meme': 'borrarMeme',
+        'login-success': 'loginSuccess'
+      },
+
+/*      ready: function() {
+        moment.locale('es');
+      },*/
 
       observers: [
         '_routePageChanged(routeData.page)',
       ],
 
-      _routePageChanged: function(page) {
-        this.page = page || 'home';
+       _routePageChanged: function(page) {
+        this.page = page || 'view1';
 
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
@@ -223,6 +285,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _showPage404: function() {
         this.page = 'view404';
       },
+
+      feedbackPositivo: function(e, data) {
+        this.$.eltoast.text = data
+        this.$.eltoast.open();
+      },
+      feedbackNegativo: function(e, data) {
+        this.$.eltoastnegativo.text = data
+        this.$.eltoastnegativo.open();
+      },
+
+      loginSuccess: function() {
+        this.$.elpush.requestPermission();
+      },
+
+      borrarMeme: function(e, data) {
+        this.$.dialogoCrudBorrar.open(data);
+      },
+
+      
     });
   </script>
 </dom-module>

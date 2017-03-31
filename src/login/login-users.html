@@ -21,12 +21,14 @@
     ></firebase-auth>
     
     <boton-login hidden$="{{logueado}}"></boton-login>
-    <boton-loged-in user-data="[[userData]]"></boton-loged-in>
+    <boton-loged-in user="[[user]]" user-data="[[userData]]" hidden$="{{!logueado}}"></boton-loged-in>
+
   </template>
   <script>
     Polymer({
       is: 'login-users',
-      behaviors: [FirebaseBehavior,EmisorFeedbackBehavior],
+
+      behaviors: [FirebaseBehavior, EmisorFeedbackBehavior],
       
       properties: {
         user: {
@@ -80,7 +82,7 @@
       saveProfile: function(user, credential) {
         //console.log('en save profile', user, credential)
         var that = this;
-        var refProfile = this.fbref(this.fb__userOne(user.uid));
+        var refProfile = this.fbref(this.fb__bodegasOne(user.uid));
         refProfile.once('value', function(ss){
           if(!ss.val()){
             //console.log('no tieene perfil, vamos a crearlo')

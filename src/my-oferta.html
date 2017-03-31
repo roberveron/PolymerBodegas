@@ -32,15 +32,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </firebase-query>
 
     <div class="card">
-      <h1>Chats</h1>
+      <h1>Comentarios</h1>
       <template is="dom-repeat" items="[[chats]]">
         <test-chat chat="[[item]]"></test-chat>
       </template>
     </div>
     
-    <paper-input label="ingrese chat" value="{{text}}"></paper-input>
+    <paper-input label="ingrese comentario" value="{{text}}"></paper-input>
     
-    <paper-button raised on-tap="crear">Crear Chat</paper-button>
+    <paper-button raised on-tap="crear">Enviar</paper-button>
     
     
   </template>
