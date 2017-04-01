@@ -1,7 +1,7 @@
 
 <link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
 
-<dom-module id="memes-crud-publico">
+<dom-module id="promociones-crud-publico">
   <template>
     <style>
       :host {
@@ -14,8 +14,8 @@
       }
     </style>
     <!--<firebase-document
-      path="[[locMeme]]"
-      data="{{meme}}"
+      path="[[locpromocion]]"
+      data="{{promocion}}"
     ></firebase-document>-->
     <firebase-document
       path="[[locRequestPublic]]"
@@ -28,35 +28,35 @@
     <paper-toggle-button 
       id="eltoggle" 
       on-change="gestionCambio"
-    >Meme público</paper-toggle-button>
+    >promocion público</paper-toggle-button>
   </template>
   <script>
     Polymer({
-      is: 'memes-crud-publico',
+      is: 'promociones-crud-publico',
 
       behaviors: [FirebaseBehavior, EmisorFeedbackBehavior],
 
       properties: {
-        meme: {
+        promocion: {
           type: Object,
           observer: 'marcarToggle'
         },
         user: Object,
         locRequestPublic: {
           type: String,
-          computed: 'fb__requestPublicMemeUser(user.uid)'
+          computed: 'fb__requestPublicpromocionUser(user.uid)'
         },
         requestPublic: Object,
         locRequestPrivate: {
           type: String,
-          computed: 'fb__requestPrivateMemeUser(user.uid)'
+          computed: 'fb__requestPrivatepromocionUser(user.uid)'
         },
         requestPrivate: Object
       },
 
-      marcarToggle: function(meme) {
-        //console.log('memeObserver: ', meme.name, meme.isPublic);
-        if(meme && meme.isPublic) {
+      marcarToggle: function(promocion) {
+        //console.log('promocionObserver: ', promocion.name, promocion.isPublic);
+        if(promocion && promocion.isPublic) {
           this.$.eltoggle.checked = true;
         } else {
           this.$.eltoggle.checked = false;          
@@ -67,38 +67,38 @@
         console.log('gestion cambio')
         //miro si hay un request ya solicitado
         if(this.$.eltoggle.checked) {
-          //se ha activado, luego tengo que solicitar un meme publico
-          this.requestMemePublication();
+          //se ha activado, luego tengo que solicitar un promocion publico
+          this.requestpromocionPublication();
         } else {
-          this.requestMemePrivatization();
+          this.requestpromocionPrivatization();
         }
       },
 
-      requestMemePublication: function() {
+      requestpromocionPublication: function() {
         console.log('requestPublic:', this.requestPublic)
         if(this.hasRequestQueued()) {
           return false;
         }
         //console.log('gestion cambio', this.$.eltoggle.active)
-        this.set('requestPublic.slug', this.meme.$key);
+        this.set('requestPublic.slug', this.promocion.$key);
       },
 
-      requestMemePrivatization: function() {
+      requestpromocionPrivatization: function() {
         console.log('requestPrivate:', this.requestPrivate)
         if(this.hasRequestQueued()) {      
           return false;
         }
         //console.log('gestion cambio', this.$.eltoggle.active)
         this.set('requestPrivate', {
-          slug: this.meme.$key,
-          publicId: this.meme.publicId
+          slug: this.promocion.$key,
+          publicId: this.promocion.publicId
         });
       },
 
       hasRequestQueued: function() {
         if((this.requestPrivate && this.requestPrivate.slug) || (this.requestPublic && this.requestPublic.slug)) {
           this.feedbackNegativo('Ya hay una solicitud encolada');
-          this.marcarToggle(this.meme);
+          this.marcarToggle(this.promocion);
           return true;
         }
         return false;

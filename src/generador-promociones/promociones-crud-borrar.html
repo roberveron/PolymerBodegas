@@ -1,7 +1,7 @@
 
 <link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
 
-<dom-module id="memes-crud-borrar">
+<dom-module id="promociones-crud-borrar">
   <template>
     <style include="shared-styles">
       :host {
@@ -15,7 +15,7 @@
   </template>
   <script>
     Polymer({
-      is: 'memes-crud-borrar',
+      is: 'promociones-crud-borrar',
 
       behaviors: [FirebaseBehavior, EmisorFeedbackBehavior],
 
@@ -28,12 +28,12 @@
         var that = this;
         var isPublic = data.isPublic || null;
         var publicId = data.publicId || null;
-        var ref = this.fbref(this.fb__memesUserOne(this.user.uid, data.$key));
+        var ref = this.fbref(this.fb__promocionesUserOne(this.user.uid, data.$key));
         ref.remove()
           .then(function() {
             //ahora borro tb aparición en el listado general (SI HAY)
             if(isPublic && publicId) {
-              var refGeneral = that.fbref(that.fb__memesOne(publicId)).child('deleted');
+              var refGeneral = that.fbref(that.fb__promocionesOne(publicId)).child('deleted');
               refGeneral.set(true)
                 .then(function() {
                   that.feedbackPositivo('Elemento borrado y eliminado públicamente');

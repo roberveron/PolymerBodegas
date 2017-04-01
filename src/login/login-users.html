@@ -82,7 +82,7 @@
       saveProfile: function(user, credential) {
         //console.log('en save profile', user, credential)
         var that = this;
-        var refProfile = this.fbref(this.fb__bodegasOne(user.uid));
+        var refProfile = this.fbref(this.fb__usersOne(user.uid));
         refProfile.once('value', function(ss){
           if(!ss.val()){
             //console.log('no tieene perfil, vamos a crearlo')

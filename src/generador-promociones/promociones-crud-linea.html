@@ -1,8 +1,8 @@
 
-<link rel="import" href="memes-crud-publico.html">
+<link rel="import" href="promociones-crud-publico.html">
 
 
-<dom-module id="memes-crud-linea">
+<dom-module id="promociones-crud-linea">
   <template>
     <style include="shared-styles"></style>
     <style include="dropdown-styles">
@@ -20,12 +20,12 @@
     </style>
     <paper-item>
       <paper-item-body two-line>
-        <div>[[meme.name]]</div>
+        <div>[[promocion.name]]</div>
         <div secondary>
-          [[meme.description]] [[meme.$key]]
+          [[promocion.description]] [[promocion.$key]]
         </div>
       </paper-item-body>
-      <paper-icon-button icon="create" on-tap="editarMeme"></paper-icon-button>
+      <paper-icon-button icon="create" on-tap="editarpromocion"></paper-icon-button>
       <paper-icon-button icon="more-vert" on-tap="abrirDrop"></paper-icon-button>
     </paper-icon-item>
 
@@ -40,21 +40,21 @@
     >
       <div class="dropdown-content">
         
-        <paper-icon-item on-tap="borrarMeme">
+        <paper-icon-item on-tap="borrarpromocion">
           <iron-icon icon="close" item-icon></iron-icon>
           Borrar
         </paper-icon-item>
-        <a href$="/meme/[[user.uid]]/[[meme.$key]]" class="linkherit">
+        <a href$="/promocion/[[user.uid]]/[[promocion.$key]]" class="linkherit">
         <paper-icon-item>
           <iron-icon icon="open-in-browser" item-icon></iron-icon>
-          Ver el memeeee
+          Ver el promocioneee
         </paper-icon-item>
         </a>
         <paper-item>
-          <memes-crud-publico 
-            meme="[[meme]]"
+          <promociones-crud-publico 
+            promocion="[[promocion]]"
             user="[[user]]"
-          ></memes-crud-publico>
+          ></promociones-crud-publico>
         </paper-item>
           
       </div>
@@ -63,21 +63,21 @@
   </template>
   <script>
     Polymer({
-      is: 'memes-crud-linea',
+      is: 'promociones-crud-linea',
 
       behaviors: [DropdownBehavior],
 
       properties: {
-        meme: Object,
+        promocion: Object,
         user: Object,
       },
 
-      editarMeme: function() {
-        this.fire('editar-meme', this.meme);
+      editarpromocion: function() {
+        this.fire('editar-promocion', this.promocion);
       },
 
-      borrarMeme: function() {
-        this.fire('borrar-meme', this.meme);
+      borrarpromocion: function() {
+        this.fire('borrar-promocion', this.promocion);
         this.$.dropd.close();
       }
     });

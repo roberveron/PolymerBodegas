@@ -1,8 +1,8 @@
-<link rel="import" href="generador-memes/memes-crud-listado.html">
-<link rel="import" href="generador-memes/memes-crud-insertar.html">
-<link rel="import" href="generador-memes/memes-crud-editar.html">
-<link rel="import" href="generador-memes/memes-crud-borrar.html">
-<link rel="import" href="generador-memes/memes-crud-borrar-dialogo.html">
+<link rel="import" href="generador-promociones/promociones-crud-listado.html">
+<link rel="import" href="generador-promociones/promociones-crud-insertar.html">
+<link rel="import" href="generador-promociones/promociones-crud-editar.html">
+<link rel="import" href="generador-promociones/promociones-crud-borrar.html">
+<link rel="import" href="generador-promociones/promociones-crud-borrar-dialogo.html">
 
 <dom-module id="my-promocion">
   <template>
@@ -43,21 +43,21 @@
       </app-toolbar>
       
       <iron-pages selected="{{seccion}}" attr-for-selected="name">
-        <memes-crud-listado
+        <promociones-crud-listado
           name="listado"
-          memes-user="[[memesUser]]"
+          promociones-user="[[promocionesUser]]"
           user="[[user]]"
-        ></memes-crud-listado>
-        <memes-crud-insertar
+        ></promociones-crud-listado>
+        <promociones-crud-insertar
           id="elinsertar"
           name="insertar"
           user="[[user]]"
-        ></memes-crud-insertar>
-        <memes-crud-editar
+        ></promociones-crud-insertar>
+        <promociones-crud-editar
           id="eleditar"
           name="editar"
           user="[[user]]"
-        ></memes-crud-editar>
+        ></promociones-crud-editar>
       </iron-pages>
 
 
@@ -75,11 +75,11 @@
           type: String,
           value: 'listado'
         },
-        locMemesUser: {
+        locpromocionesUser: {
           type: String,
-          computed: 'fb__memesUserAll(user.uid)'
+          computed: 'fb__promocionesUserAll(user.uid)'
         },
-        memesUser: Array,
+        promocionesUser: Array,
 
       },
 

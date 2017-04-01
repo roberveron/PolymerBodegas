@@ -1,16 +1,15 @@
 
-<link rel="import" href="memes-crud-imagen.html">
+<link rel="import" href="promociones-crud-imagen.html">
 
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
 
 
-<dom-module id="memes-crud-formulario">
+<dom-module id="promociones-crud-formulario">
   <template>
     <style>
       :host {
         display: block;
       }
-      
     </style>
     
     <paper-input 
@@ -23,11 +22,11 @@
     ></paper-input>
     <paper-input label="Descripción" value="{{item.description}}"></paper-input>
     <template is="dom-if" if="[[!edicion]]">
-      <memes-crud-imagen
+      <promociones-crud-imagen
         id="elimage"
         texto="[[item.texto]]"
         blob="{{blob}}"
-      ></memes-crud-imagen>
+      ></promociones-crud-imagen>
       <paper-input label="Texto para la imagen" value="{{item.texto}}" on-keyup="writeImage"></paper-input>
     </template>
     <template is="dom-if" if="[[edicion]]">
@@ -36,7 +35,7 @@
   </template>
   <script>
     Polymer({
-      is: 'memes-crud-formulario',
+      is: 'promociones-crud-formulario',
 
       properties: {
         item: {

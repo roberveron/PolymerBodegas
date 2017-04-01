@@ -1,11 +1,11 @@
 
-<link rel="import" href="memes-crud-formulario.html">
+<link rel="import" href="promociones-crud-formulario.html">
 <link rel="import" href="/utils/string-to-slug.html">
 <link rel="import" href="/utils/moment-element.html">
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 
 
-<dom-module id="memes-crud-insertar">
+<dom-module id="promociones-crud-insertar">
   <template>
     <style include="shared-styles">
       :host {
@@ -16,11 +16,11 @@
         --paper-progress-height: 10px;
       }
     </style>
-    <memes-crud-formulario 
+    <promociones-crud-formulario 
       id="form"
       item="{{item}}"
       blob="{{blob}}"
-    ></memes-crud-formulario>
+    ></promociones-crud-formulario>
     <paper-progress 
       hidden$="[[!loadingImage]]"
       value="[[progreso]]"
@@ -36,7 +36,7 @@
   </template>
   <script>
     Polymer({
-      is: 'memes-crud-insertar',
+      is: 'promociones-crud-insertar',
 
       behaviors: [FirebaseBehavior, EmisorFeedbackBehavior],
 
@@ -81,8 +81,8 @@
 
         //voy a reformular el slug, para q sea único
         var that = this;
-        var refMmemeExistente = this.fbref(this.fb__memesUserOne(this.user.uid, this.slug));
-        refMmemeExistente.once('value', function(ss) {
+        var refMpromocionExistente = this.fbref(this.fb__promocionesUserOne(this.user.uid, this.slug));
+        refMpromocionExistente.once('value', function(ss) {
           if(ss.val()) {
             //encontré el slug repetido
             that.slugUnico = that.slug + '-' + moment().format('x');
@@ -98,7 +98,7 @@
       cargarImagen: function() {
         this.progreso = 0;
         this.loadingImage = true; // Muestra la barra de progreso
-        var refStorage = this.fbStorageRef(this.fs__memeImage(this.user.uid, this.slugUnico));
+        var refStorage = this.fbStorageRef(this.fs__promocionImage(this.user.uid, this.slugUnico));
 
         // procedimiento para subir el archibo
         var uploadTask = refStorage.put(this.blob);
@@ -115,28 +115,28 @@
             that.feedbackPositivo('Descarga subida');
             that.progreso = 100;
             that.item.downloadURL = uploadTask.snapshot.downloadURL;
-            that.almacenarMemeUser()
+            that.almacenarpromocionUser()
           });
       },
 
-      almacenarMemeUser: function(){
-        //datos adicionales de control del meme
+      almacenarpromocionUser: function(){
+        //datos adicionales de control del promocion
         this.item.timestamp =  moment().format('X');
         this.item.timestamp = parseInt(this.item.timestamp);
         this.item.isPublic = false;
         var that = this;
-        var ref = this.fbref(this.fb__memesUserAll(this.user.uid)).child(this.slugUnico);
+        var ref = this.fbref(this.fb__promocionesUserAll(this.user.uid)).child(this.slugUnico);
         //console.log('voy a insertar: ', JSON.stringify(this.item))
         ref.set(this.item)
           .then(function() {
-            that.feedbackPositivo('Meme insertado en la base de datos');
+            that.feedbackPositivo('promocion insertado en la base de datos');
             that.resetItem();
             that.fire('volver-listado');
           })
           .catch(function(err) {
             // TODO:
-            // DEBERÍA BORRAR LA IMAGEN QUE NO HEMOS PODIDO INSERTAR COMO MEME
-            that.feedbackNegativo('Error al insertar el meme: ' + err);            
+            // DEBERÍA BORRAR LA IMAGEN QUE NO HEMOS PODIDO INSERTAR COMO promocion
+            that.feedbackNegativo('Error al insertar el promocion: ' + err);            
           });
       },
 

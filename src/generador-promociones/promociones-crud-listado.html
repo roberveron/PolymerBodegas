@@ -1,16 +1,16 @@
 
-<link rel="import" href="memes-crud-linea.html">
+<link rel="import" href="promociones-crud-linea.html">
 
-<dom-module id="memes-crud-listado">
+<dom-module id="promociones-crud-listado">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
       }
-      memes-crud-linea {
+      promociones-crud-linea {
         background: #f7f7f7;
       }
-      memes-crud-linea:nth-child(even) {background: var(--light-primary-color)}
+      promociones-crud-linea:nth-child(even) {background: var(--light-primary-color)}
       .noitems{
         padding: 15px;
         margin: 10px 35px;
@@ -22,29 +22,29 @@
       }
     </style>
     
-    <template is="dom-if" if="[[showMsgNoMemes]]">
+    <template is="dom-if" if="[[showMsgNopromociones]]">
       <div class="noitems" hidden$="">
-        <p>No has creado memes todavía, pulsa el botón 
+        <p>No has creado promociones todavía, pulsa el botón 
         <iron-icon icon="add"></iron-icon>
         "nuevo"</p>
       </div>
     </template>
 
-    <template is="dom-repeat" items="[[memesUser]]">
-      <memes-crud-linea 
-        meme="[[item]]"
+    <template is="dom-repeat" items="[[promocionesUser]]">
+      <promociones-crud-linea 
+        promocion="[[item]]"
         user="[[user]]"
-      ></memes-crud-linea>
+      ></promociones-crud-linea>
     </template>
   </template>
   <script>
     Polymer({
-      is: 'memes-crud-listado',
+      is: 'promociones-crud-listado',
 
       properties: {
-        memesUser: Array,
+        promocionesUser: Array,
         user: Object,
-        showMsgNoMemes: {
+        showMsgNopromociones: {
           type: Boolean,
           value: false
         },
@@ -54,24 +54,24 @@
         }
       },
 
-      observers: ['testNumMemes(memesUser.length)'],
+      observers: ['testNumpromociones(promocionesUser.length)'],
 
       ready: function() {
         var that = this;
         this.async(function() {
           that.timeToShow = true;
-          that.testNumMemes();
+          that.testNumpromociones();
         }, 2500);
       },
 
-      testNumMemes: function() {
-        if(!this.memesUser) {
+      testNumpromociones: function() {
+        if(!this.promocionesUser) {
           return false;
         }
-        if(!this.memesUser.length && this.timeToShow) {
-          this.showMsgNoMemes = true;
+        if(!this.promocionesUser.length && this.timeToShow) {
+          this.showMsgNopromociones = true;
         } else {
-          this.showMsgNoMemes = false;          
+          this.showMsgNopromociones = false;          
         }
       }
     });

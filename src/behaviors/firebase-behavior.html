@@ -19,11 +19,11 @@ FirebaseBehavior = {
     return this.fbapp.database().ref(ruta);
   },
   // USERS
-  fb__bodegasAll: function() {
-    return '/bodegas';
+  fb__usersAll: function() {
+    return '/users';
   },
-  fb__bodegasOne: function(id) {
-    return this.fb__bodegasAll() + '/' + id;
+  fb__usersOne: function(id) {
+    return this.fb__usersAll() + '/' + id;
   },
   fb__chatsAll: function() {
     return '/chats';
@@ -32,40 +32,40 @@ FirebaseBehavior = {
     return this.fb__chatsAll() + '/' + id;
   },
 
- // MEMES_USUARIO
-  fb__memesUserAll: function(id) {
-    return '/memesUser/' + id;
+ // promociones_USUARIO
+  fb__promocionesUserAll: function(id) {
+    return '/promocionesUser/' + id;
   },
-  fb__memesUserOne: function(id, key) {
-    return this.fb__memesUserAll(id) + '/' + key;
+  fb__promocionesUserOne: function(id, key) {
+    return this.fb__promocionesUserAll(id) + '/' + key;
   },
-  fb_favMemeUser: function(idUser, memeLocData) {
-    //console.log('fb_favMemeUser', idUser, memeLocData)
-    return '/memesUserFavs/' + memeLocData.userId + '/' + memeLocData.slug + '/' + idUser
+  fb_favpromocionUser: function(idUser, promocionLocData) {
+    //console.log('fb_favpromocionUser', idUser, promocionLocData)
+    return '/promocionesUserFavs/' + promocionLocData.userId + '/' + promocionLocData.slug + '/' + idUser
   },
-  fb_favMemeAll: function(memeLocData) {
-    //console.log('fb_favMemeAll', '/memesUserFavs/' + memeLocData.userId + '/' + memeLocData.slug)
-    return '/memesUserFavs/' + memeLocData.userId + '/' + memeLocData.slug;
+  fb_favpromocionAll: function(promocionLocData) {
+    //console.log('fb_favpromocionAll', '/promocionesUserFavs/' + promocionLocData.userId + '/' + promocionLocData.slug)
+    return '/promocionesUserFavs/' + promocionLocData.userId + '/' + promocionLocData.slug;
   },
 
-  // MEMES GLOBALES
-  fb__memesAll: function() {
-    return '/memes';
+  // promociones GLOBALES
+  fb__promocionesAll: function() {
+    return '/promociones';
   },
-  fb__memesOne: function(id) {
-    return this.fb__memesAll() + '/' + id;
+  fb__promocionesOne: function(id) {
+    return this.fb__promocionesAll() + '/' + id;
   },
   fb__numFavs: function(id) {
-    return this.fb__memesOne(id) + '/numFavs'
+    return this.fb__promocionesOne(id) + '/numFavs'
   },
 
-  // REQUEST MEME PUBLICO
-  fb__requestPublicMemeUser: function(uid) {
-    return '/requestPublicMeme/' + uid;
+  // REQUEST promocion PUBLICO
+  fb__requestPublicpromocionUser: function(uid) {
+    return '/requestPublicpromocion/' + uid;
   },
-  // REQUEST MEME PRIVADO
-  fb__requestPrivateMemeUser: function(uid) {
-    return '/requestPrivateMeme/' + uid;
+  // REQUEST promocion PRIVADO
+  fb__requestPrivatepromocionUser: function(uid) {
+    return '/requestPrivatepromocion/' + uid;
   },
   // REQUEST SHARE TWITTER
   fb_twitterShareRequestUser: function(uid) {
@@ -102,8 +102,8 @@ FirebaseBehavior = {
     return this.fbapp.storage().ref(ruta);
   },
 
-  fs__memeImage: function(uid, archivo) {
-    return '/memes/' + uid + '/' + archivo + '.png';
+  fs__promocionImage: function(uid, archivo) {
+    return '/promociones/' + uid + '/' + archivo + '.png';
   }
 };
 </script>

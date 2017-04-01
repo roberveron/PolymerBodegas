@@ -85,6 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --disabled-text-color:      #BDBDBD;
         --divider-color:            #BDBDBD;
         --app-secondary-color:      black;
+        --paper-input-container-input-color: black;
 
      display: block;
       }
@@ -226,9 +227,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-toast id="eltoast"></paper-toast>
     <paper-toast id="eltoastnegativo" duration="5000"></paper-toast>
 
-  <memes-crud-borrar-dialogo
+  <promociones-crud-borrar-dialogo
       id="dialogoCrudBorrar"
-    ></memes-crud-borrar-dialogo>
+    ></promociones-crud-borrar-dialogo>
 
   </template>
 
@@ -249,14 +250,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         userData: Object,
         locUser: {
           type: String,
-          computed: 'fb__bodegasOne(user.uid)'
+          computed: 'fb__usersOne(user.uid)'
         }
       },
 
       listeners: {
         'feedback-positivo': 'feedbackPositivo',
         'feedback-negativo': 'feedbackNegativo',
-        'borrar-meme': 'borrarMeme',
+        'borrar-promocion': 'borrarpromocion',
         'login-success': 'loginSuccess'
       },
 
@@ -269,7 +270,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
        _routePageChanged: function(page) {
-        this.page = page || 'view1';
+        this.page = page || 'home';
 
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
@@ -299,7 +300,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.elpush.requestPermission();
       },
 
-      borrarMeme: function(e, data) {
+      borrarpromocion: function(e, data) {
         this.$.dialogoCrudBorrar.open(data);
       },
 
