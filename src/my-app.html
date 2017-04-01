@@ -60,7 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- MY ELEMENTS -->
 <link rel="import" href="my-icons.html">
 <link rel="import" href="styles/shared-styles.html">
-<!--<link rel="import" href="./utils/moment-element.html">-->
+<link rel="import" href="/utils/moment-element.html">
 <link rel="import" href="./login/login-users.html">
 
 
@@ -79,7 +79,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --light-primary-color:      #B2DFDB;
         --text-primary-color:       #FFFFFF;
         --accent-color:             #00BCD4;
-        --primary-background-color: #D6EAF8;
+        --primary-background-color: #a1c2e0;
         --primary-text-color:       #FFFFFF;
         --secondary-text-color:     #757575;
         --disabled-text-color:      #BDBDBD;
@@ -178,8 +178,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer id="drawer">
+        <br>
         
-        <app-toolbar><iron-icon icon="icons:reorder"></iron-icon>Menu </app-toolbar>
+        <app-toolbar><img src="/images/favicon.ico"></app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
             <a name="home" href="/home" class="navlink">
             <iron-icon icon="home"></iron-icon>
@@ -193,19 +194,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-icon icon="icons:group-work"></iron-icon>
             <span>Promocion</span>
           </a>
-
         </iron-selector>
       </app-drawer>
-
+      
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
 
         <app-header condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>BodegasParaguay</div>
+            <div main-title><p>[[userData.name]]</p></div>
 
-            <login-users user="{{user}}"></login-users>
+            <login-users user="{{user}}" user-data="[[userData]]"></login-users>
             <notification-advisor user="{{user}}"></notification-advisor>
           </app-toolbar>
         </app-header>
@@ -224,7 +224,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </app-drawer-layout>
 
     <paper-toast id="eltoast"></paper-toast>
-    <paper-toast id="eltoastnegativo"></paper-toast>
+    <paper-toast id="eltoastnegativo" duration="5000"></paper-toast>
 
   <memes-crud-borrar-dialogo
       id="dialogoCrudBorrar"
@@ -260,9 +260,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         'login-success': 'loginSuccess'
       },
 
-/*      ready: function() {
+      ready: function() {
         moment.locale('es');
-      },*/
+      },
 
       observers: [
         '_routePageChanged(routeData.page)',
