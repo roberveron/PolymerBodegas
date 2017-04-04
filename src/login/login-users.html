@@ -47,6 +47,7 @@
       listeners: {
         'login-google-request': 'loguearseGoogle',
         'login-twitter-request': 'loguearseTwitter',
+        'login-facebook-request': 'loguearseFacebook',
         'logout-request': 'logout'
       },
 
@@ -57,6 +58,10 @@
 
       loguearseTwitter: function() {
         this.provider = 'twitter';
+        this.loguearse();
+      },
+      loguearseFacebook: function() {
+        this.provider = 'facebook';
         this.loguearse();
       },
 

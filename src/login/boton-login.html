@@ -20,6 +20,12 @@
       paper-button span{
         margin-left: 15px;
       }
+      paper-button.rojo{
+       background-color: red;
+      }
+      paper-button.azul{
+       background-color: darkblue;
+      }
     </style>
 
     <paper-icon-button icon="icons:account-circle" on-tap="abrirDrop" hidden="{{logueado}}"></paper-icon-button>
@@ -34,13 +40,18 @@
     >
       <div class="dropdown-content">
         
-        <paper-button raised on-tap="loguearseGoogle">
+        <paper-button raised class="custom rojo" on-tap="loguearseGoogle">
           <iron-icon icon="rrss:google"></iron-icon>
-          <span>Login con Google</span>
+          <span>Ingresar con Google</span>
         </paper-button>
-        <paper-button raised on-tap="loguearseTwitter">
+        <paper-button toogles raised on-tap="loguearseTwitter">
           <iron-icon icon="rrss:twitter"></iron-icon>
-          <span>Login con Twitter</span>
+          <span>Ingresar con Twitter</span>
+        </paper-button>
+
+        <paper-button raised class="custom azul" on-tap="loguearseFacebook">
+          <iron-icon icon="rrss:facebook"></iron-icon>
+          <span>Ingresar Facebook</span>
         </paper-button>
           
       </div>
@@ -58,6 +69,10 @@
       },
       loguearseTwitter: function() {
         this.fire('login-twitter-request');
+        this.$.dropd.close();
+      },
+      loguearseFacebook: function() {
+        this.fire('login-facebook-request');
         this.$.dropd.close();
       }
     });

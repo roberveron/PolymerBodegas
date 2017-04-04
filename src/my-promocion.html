@@ -30,6 +30,11 @@
       }
     </style>
 
+    <firebase-query
+      path="[[locpromocionesUser]]"
+      data="{{promocionesUser}}"
+      order-by-child="timestamp"
+    ></firebase-query>
 
     <div class="contenedor">
       <app-toolbar>
@@ -40,8 +45,18 @@
           <iron-icon icon="add"></iron-icon>
           <span>Nuevo</span>
         </paper-button>
+
       </app-toolbar>
       
+      <div class="nosesion nover" id="msgsesion" hidden$="[[user]]">
+        <p>
+          Para generar memes debes iniciar sesión en la aplicación.
+        </p>
+        <p>
+          Inicia sesión con el botón <iron-icon icon="account-circle"></iron-icon> de arriba a la derecha
+        </p>
+      </div>
+
       <iron-pages selected="{{seccion}}" attr-for-selected="name">
         <promociones-crud-listado
           name="listado"
@@ -59,9 +74,14 @@
           user="[[user]]"
         ></promociones-crud-editar>
       </iron-pages>
-
-
     </div>
+
+    <promociones-crud-borrar
+      id="elborrar"
+      user="[[user]]"
+    ></promociones-crud-borrar>
+
+
   </template>
   <script>
     Polymer({
@@ -80,15 +100,35 @@
           computed: 'fb__promocionesUserAll(user.uid)'
         },
         promocionesUser: Array,
+        listp: Array
+      },
 
+      listeners: {
+        'volver-listado': 'irListado',
+        'editar-promocion': 'editarpromocion',
+      },
+
+      ready: function() {
+        this.async(this.mostrarMensajeLogueo, 2000);
+      },
+
+      mostrarMensajeLogueo: function() {
+        this.toggleClass('nover', false, this.$.msgsesion);
       },
 
       add: function() {
-       this.$.elinsertar.resetItem();
+        this.$.elinsertar.resetItem();
         this.seccion = 'insertar';
       },
 
+      irListado: function() {
+        this.seccion = 'listado';
+      },
 
+      editarpromocion: function(e, promocion) {
+        this.$.eleditar.item = promocion;
+        this.seccion = 'editar';
+      },
     });
   </script>
 </dom-module>

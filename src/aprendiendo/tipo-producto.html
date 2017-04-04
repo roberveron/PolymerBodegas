@@ -1,0 +1,24 @@
+
+<dom-module id="tipo-producto">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+
+          [[producto.nombre]]
+
+    </template>
+    <script>
+        Polymer({
+            is: 'tipo-producto',
+
+            behaviors: [FirebaseBehavior],
+
+            properties: {
+                producto: Array
+            }
+        });
+    </script>
+</dom-module>

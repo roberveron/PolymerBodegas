@@ -1,5 +1,9 @@
 
 <link rel="import" href="promociones-crud-publico.html">
+<link rel="import" href="/utils/timestamp-to-fecha.html">
+
+<link rel="import" href="../interfaces/imagen-avatar.html">
+
 
 
 <dom-module id="promociones-crud-linea">
@@ -17,14 +21,19 @@
           font-size: .9em;
         };
       }
+       paper-item-body {
+         font-weight: bold;
+          font-size: 1.2em;
+        }
     </style>
     <paper-item>
       <paper-item-body two-line>
-        <div>[[promocion.name]]</div>
+        <div><imagen-avatar imagen="[[promocion.downloadURL]]"></imagen-avatar> [[promocion.name]]</div>
         <div secondary>
-          [[promocion.description]] [[promocion.$key]]
+          [[promocion.precio]] Gs.           
         </div>
       </paper-item-body>
+      <timestamp-to-fecha timestamp=[[promocion.timestamp]] relative></timestamp-to-fecha>
       <paper-icon-button icon="create" on-tap="editarpromocion"></paper-icon-button>
       <paper-icon-button icon="more-vert" on-tap="abrirDrop"></paper-icon-button>
     </paper-icon-item>

@@ -122,7 +122,7 @@
       almacenarpromocionUser: function(){
         //datos adicionales de control del promocion
         this.item.timestamp =  moment().format('X');
-        this.item.timestamp = parseInt(this.item.timestamp);
+        this.item.timestamp = parseInt(this.item.timestamp*1000);
         this.item.isPublic = false;
         var that = this;
         var ref = this.fbref(this.fb__promocionesUserAll(this.user.uid)).child(this.slugUnico);
