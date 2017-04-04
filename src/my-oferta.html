@@ -25,7 +25,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <firebase-query
+<!--BLOQUE PARA CHAT-->
+   <firebase-query
       id="query"
       path="/chats"
       data="{{chats}}">
@@ -37,9 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <test-chat chat="[[item]]"></test-chat>
       </template>
     </div>
-    
     <paper-input label="ingrese comentario" value="{{text}}"></paper-input>
-    
     <paper-button raised on-tap="crear">Enviar</paper-button>
     
     

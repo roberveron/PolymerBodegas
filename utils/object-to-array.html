@@ -1,0 +1,36 @@
+<dom-module id="object-to-array">
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'object-to-array',
+
+      properties: {
+        object: {
+          type: Object,
+          observer: 'toArray'
+        },
+        array: {
+          type: Array,
+          value: function(){
+            return [];
+          },
+          notify: true
+        }
+      },
+      toArray: function(o) {
+          var numelems = this.array.length;
+          this.splice('array', 0, numelems);
+          this.async(this.renewContent, 1);
+          console.log()
+      },
+      renewContent: function() {
+        for (var id in this.object){
+            this.push('array', id);
+          }
+      }
+    });
+  })();
+  </script>
+</dom-module>
