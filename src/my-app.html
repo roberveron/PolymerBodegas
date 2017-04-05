@@ -81,6 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --light-primary-color:      #B2DFDB;
         --text-primary-color:       #FFFFFF;
         --accent-color:             #00BCD4;
+        --accent-color2:            orange;
         --primary-background-color: #a1c2e0;
         --primary-text-color:       #FFFFFF;
         --secondary-text-color:     #757575;
@@ -233,6 +234,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       id="dialogoCrudBorrar"
     ></promociones-crud-borrar-dialogo>
 
+      <ofertas-crud-borrar-dialogo
+      id="dialogoCrudBorrar2"
+    ></ofertas-crud-borrar-dialogo>
+
+
   </template>
 
   <script>
@@ -260,6 +266,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         'feedback-positivo': 'feedbackPositivo',
         'feedback-negativo': 'feedbackNegativo',
         'borrar-promocion': 'borrarpromocion',
+        'borrar-oferta': 'borraroferta',
         'login-success': 'loginSuccess'
       },
 
@@ -305,8 +312,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       borrarpromocion: function(e, data) {
         this.$.dialogoCrudBorrar.open(data);
       },
-
-      
+      borraroferta: function(e, data) {
+        this.$.dialogoCrudBorrar2.open(data);
+      }
     });
   </script>
 </dom-module>

@@ -1,63 +1,134 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="shared-styles.html">
-
-
-<link rel="import" href="./aprendiendo/test-chat.html">
-
+<link rel="import" href="generador-ofertas/ofertas-crud-listado.html">
+<link rel="import" href="generador-ofertas/ofertas-crud-insertar.html">
+<link rel="import" href="generador-ofertas/ofertas-crud-editar.html">
+<link rel="import" href="generador-ofertas/ofertas-crud-borrar.html">
+<link rel="import" href="generador-ofertas/ofertas-crud-borrar-dialogo.html">
 
 <dom-module id="my-oferta">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
-
-        padding: 10px;
+      }
+      iron-pages {
+        padding: 15px;
+      }
+      .nosesion {
+        padding: 15px;
+        margin: 10px 50px 0;
+        color: #c33;
+        background-color: #fcc;
+        font-size: .8em;
+        text-align: center;
+        border: 1px solid #ccc;
+      }
+      .nosesion p {
+        margin: 5px;
+      }
+      .nover{
+        display: none;
       }
     </style>
 
-<!--BLOQUE PARA CHAT-->
-   <firebase-query
-      id="query"
-      path="/chats"
-      data="{{chats}}">
-    </firebase-query>
+    <firebase-query
+      path="[[locofertasUser]]"
+      data="{{ofertasUser}}"
+      order-by-child="timestamp"
+    ></firebase-query>
 
-    <div class="card">
-      <h1>Comentarios</h1>
-      <template is="dom-repeat" items="[[chats]]">
-        <test-chat chat="[[item]]"></test-chat>
-      </template>
+    <div class="contenedor">
+      <app-toolbar>
+        <div main-title>Generar Oferta</div>
+        <paper-icon-button icon="add" on-tap="add" class="onlysmall"></paper-icon-button>
+
+        <paper-button class="onlybig" on-tap="add">
+          <iron-icon icon="add"></iron-icon>
+          <span>Nuevo</span>
+        </paper-button>
+
+      </app-toolbar>
+      
+      <div class="nosesion nover" id="msgsesion" hidden$="[[user]]">
+        <p>
+          Para generar ofertas debes iniciar sesión en la aplicación.
+        </p>
+        <p>
+          Inicia sesión con el botón <iron-icon icon="account-circle"></iron-icon> de arriba a la derecha
+        </p>
+      </div>
+
+      <iron-pages selected="{{seccion}}" attr-for-selected="name">
+        <ofertas-crud-listado
+          name="listado"
+          ofertas-user="[[ofertasUser]]"
+          user="[[user]]"
+        ></ofertas-crud-listado>
+        <ofertas-crud-insertar
+          id="elinsertar"
+          name="insertar"
+          user="[[user]]"
+        ></ofertas-crud-insertar>
+        <ofertas-crud-editar
+          id="eleditar"
+          name="editar"
+          user="[[user]]"
+        ></ofertas-crud-editar>
+      </iron-pages>
     </div>
-    <paper-input label="ingrese comentario" value="{{text}}"></paper-input>
-    <paper-button raised on-tap="crear">Enviar</paper-button>
-    
-    
-  </template>
 
+    <ofertas-crud-borrar
+      id="elborrar"
+      user="[[user]]"
+    ></ofertas-crud-borrar>
+
+
+  </template>
   <script>
     Polymer({
       is: 'my-oferta',
+
       behaviors: [FirebaseBehavior],
-      
+
       properties: {
-        chats: Array, 
-        text: String
+        user: Object,
+        seccion: {
+          type: String,
+          value: 'listado'
+        },
+        locofertasUser: {
+          type: String,
+          computed: 'fb__ofertasUserAll(user.uid)'
+        },
+        ofertasUser: Array,
+        listp: Array
       },
-      crear: function(){
-        this.fbref(this.fb__chatsAll()).push({
-          text: this.text
-        })
-      }
+
+      listeners: {
+        'volver-listado': 'irListado',
+        'editar-oferta': 'editaroferta',
+      },
+
+      ready: function() {
+        this.async(this.mostrarMensajeLogueo, 2000);
+      },
+
+      mostrarMensajeLogueo: function() {
+        this.toggleClass('nover', false, this.$.msgsesion);
+      },
+
+      add: function() {
+        this.$.elinsertar.resetItem();
+        this.seccion = 'insertar';
+      },
+
+      irListado: function() {
+        this.seccion = 'listado';
+      },
+
+      editaroferta: function(e, oferta) {
+        this.$.eleditar.item = oferta;
+        this.seccion = 'editar';
+      },
     });
   </script>
 </dom-module>

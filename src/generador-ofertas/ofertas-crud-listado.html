@@ -1,0 +1,79 @@
+
+<link rel="import" href="ofertas-crud-linea.html">
+
+<dom-module id="ofertas-crud-listado">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+      ofertas-crud-linea {
+        background: #f7f7f7;
+      }
+      ofertas-crud-linea:nth-child(even) {background: var(--light-primary-color)}
+      .noitems{
+        padding: 15px;
+        margin: 10px 35px;
+        color: #39c;
+        background-color: #9df;
+        font-size: .8em;
+        text-align: center;
+        border: 1px solid #ccc;
+      }
+    </style>
+    
+    <template is="dom-if" if="[[showMsgNoofertas]]">
+      <div class="noitems" hidden$="">
+        <p>No has creado ofertas todavía, pulsa el botón 
+        <iron-icon icon="add"></iron-icon>
+        "nuevo"</p>
+      </div>
+    </template>
+
+    <template is="dom-repeat" items="[[ofertasUser]]">
+      <ofertas-crud-linea 
+        oferta="[[item]]"
+        user="[[user]]"
+      ></ofertas-crud-linea>
+    </template>
+  </template>
+  <script>
+    Polymer({
+      is: 'ofertas-crud-listado',
+
+      properties: {
+        ofertasUser: Array,
+        user: Object,
+        showMsgNoofertas: {
+          type: Boolean,
+          value: false
+        },
+        timeToShow: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      observers: ['testNumofertas(ofertasUser.length)'],
+
+      ready: function() {
+        var that = this;
+        this.async(function() {
+          that.timeToShow = true;
+          that.testNumofertas();
+        }, 2500);
+      },
+
+      testNumofertas: function() {
+        if(!this.ofertasUser) {
+          return false;
+        }
+        if(!this.ofertasUser.length && this.timeToShow) {
+          this.showMsgNoofertas = true;
+        } else {
+          this.showMsgNoofertas = false;          
+        }
+      }
+    });
+  </script>
+</dom-module>

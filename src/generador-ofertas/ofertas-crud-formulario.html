@@ -1,0 +1,93 @@
+
+<link rel="import" href="ofertas-crud-imagen.html">
+
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../aprendiendo/tipo-producto.html">
+
+
+<dom-module id="ofertas-crud-formulario">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <firebase-query
+      id="query"
+      path="/tipoproducto"
+      data="{{arbolproductos}}">
+    </firebase-query>
+
+<!--      <template is="dom-repeat" items="[[chats]]">
+        <tipo-producto producto="[[item]]"></tipo-producto>
+      </template>-->
+
+    <paper-input id="namefield" label="Nombre" value="{{item.name}}" error-message="Requerido" required auto-validate></paper-input>
+    <paper-input label="Descripción" value="{{item.description}}"></paper-input>
+    <paper-input label="Precio" value="{{item.precio}}"></paper-input>
+    <dropdown-menu label="Tipo Producto " items="[[arbolproductos]]" value="{{value}}"></dropdown-menu>
+
+
+    <template is="dom-if" if="[[!edicion]]">
+      <ofertas-crud-imagen
+        id="elimage"
+        texto="[[item.texto]]"
+        blob="{{blob}}"
+      ></ofertas-crud-imagen>
+      <paper-input label="Texto para la imagen" value="{{item.texto}}" on-keyup="writeImage"></paper-input>
+    </template>
+    <template is="dom-if" if="[[edicion]]">
+      <iron-image src="[[item.downloadURL]]"></iron-image>
+    </template>
+  </template>
+  <script>
+
+    Polymer({
+      is: 'ofertas-crud-formulario',
+      properties: {
+        item: {
+          type: Object,
+          notify: true,
+          value: function() {
+            return {}
+          }
+        },
+        blob: {
+          type: Object,
+          notify: true
+        },
+        edicion: {
+          type: Boolean,
+          value: false
+        }
+      },
+
+      resetItem: function() {
+        this.item = {
+          name: '',
+          description: '',
+          texto: ''
+        }
+        this.borrarImagen();
+      },
+      
+      isValid: function() {
+        //console.log(this.item)
+        if(this.item.name.length == 0) {
+          return false;
+        }
+        return true;   
+      },
+
+      writeImage: function() {
+        this.$$('#elimage').writeImage();
+      },
+
+      borrarImagen: function() {
+        this.$$('#elimage').borrarImagen();
+      }
+      
+    });
+  </script>
+</dom-module>

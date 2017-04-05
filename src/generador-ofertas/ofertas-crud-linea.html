@@ -1,0 +1,94 @@
+
+<link rel="import" href="ofertas-crud-publico.html">
+<link rel="import" href="/utils/timestamp-to-fecha.html">
+
+<link rel="import" href="../interfaces/imagen-avatar.html">
+
+
+
+<dom-module id="ofertas-crud-linea">
+  <template>
+    <style include="shared-styles"></style>
+    <style include="dropdown-styles">
+      :host {
+        display: block;
+      }
+      .dropdown-content{
+        width: 250px;
+      }
+      paper-icon-item {
+        --paper-icon-item: {
+          font-size: .9em;
+        };
+      }
+       paper-item-body {
+         font-weight: bold;
+          font-size: 1.2em;
+        }
+    </style>
+    <paper-item>
+      <paper-item-body two-line>
+        <div><imagen-avatar imagen="[[oferta.downloadURL]]"></imagen-avatar> [[oferta.name]]</div>
+        <div secondary>
+          [[oferta.precio]] Gs.           
+        </div>
+      </paper-item-body>
+      <timestamp-to-fecha timestamp=[[oferta.timestamp]] relative></timestamp-to-fecha>
+      <paper-icon-button icon="create" on-tap="editaroferta"></paper-icon-button>
+      <paper-icon-button icon="more-vert" on-tap="abrirDrop"></paper-icon-button>
+    </paper-icon-item>
+
+    
+    <iron-dropdown 
+      horizontal-align="right" 
+      vertical-align="top" 
+      vertical-offset="40"
+      id="dropd"
+      open-animation-config="[[animacionEntrada]]" 
+      close-animation-config="[[animacionSalida]]"   
+    >
+      <div class="dropdown-content">
+        
+        <paper-icon-item on-tap="borraroferta">
+          <iron-icon icon="close" item-icon></iron-icon>
+          Borrar
+        </paper-icon-item>
+        <a href$="/oferta/[[user.uid]]/[[oferta.$key]]" class="linkherit">
+        <paper-icon-item>
+          <iron-icon icon="open-in-browser" item-icon></iron-icon>
+          Ver el ofertaeee
+        </paper-icon-item>
+        </a>
+        <paper-item>
+          <ofertas-crud-publico 
+            oferta="[[oferta]]"
+            user="[[user]]"
+          ></ofertas-crud-publico>
+        </paper-item>
+          
+      </div>
+    </iron-dropdown>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'ofertas-crud-linea',
+
+      behaviors: [DropdownBehavior],
+
+      properties: {
+        oferta: Object,
+        user: Object,
+      },
+
+      editaroferta: function() {
+        this.fire('editar-oferta', this.oferta);
+      },
+
+      borraroferta: function() {
+        this.fire('borrar-oferta', this.oferta);
+        this.$.dropd.close();
+      }
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,108 @@
+
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+
+<dom-module id="ofertas-crud-publico">
+  <template>
+    <style>
+      :host {
+        display: block;
+        
+      }
+      paper-toggle-button {
+        font-size: .9em;
+        --paper-toggle-button-label-color: #666;
+      }
+    </style>
+    <!--<firebase-document
+      path="[[locoferta]]"
+      data="{{oferta}}"
+    ></firebase-document>-->
+    <firebase-document
+      path="[[locRequestPublic]]"
+      data="{{requestPublic}}"
+    ></firebase-document>
+    <firebase-document
+      path="[[locRequestPrivate]]"
+      data="{{requestPrivate}}"
+    ></firebase-document>
+    <paper-toggle-button 
+      id="eltoggle" 
+      on-change="gestionCambio"
+    >oferta público</paper-toggle-button>
+  </template>
+  <script>
+    Polymer({
+      is: 'ofertas-crud-publico',
+
+      behaviors: [FirebaseBehavior, EmisorFeedbackBehavior],
+
+      properties: {
+        oferta: {
+          type: Object,
+          observer: 'marcarToggle'
+        },
+        user: Object,
+        locRequestPublic: {
+          type: String,
+          computed: 'fb__requestPublicofertaUser(user.uid)'
+        },
+        requestPublic: Object,
+        locRequestPrivate: {
+          type: String,
+          computed: 'fb__requestPrivateofertaUser(user.uid)'
+        },
+        requestPrivate: Object
+      },
+
+      marcarToggle: function(oferta) {
+        //console.log('ofertaObserver: ', oferta.name, oferta.isPublic);
+        if(oferta && oferta.isPublic) {
+          this.$.eltoggle.checked = true;
+        } else {
+          this.$.eltoggle.checked = false;          
+        }
+      },
+
+      gestionCambio: function() {
+        console.log('gestion cambio')
+        //miro si hay un request ya solicitado
+        if(this.$.eltoggle.checked) {
+          //se ha activado, luego tengo que solicitar un oferta publico
+          this.requestofertaPublication();
+        } else {
+          this.requestofertaPrivatization();
+        }
+      },
+
+      requestofertaPublication: function() {
+        console.log('requestPublic:', this.requestPublic)
+        if(this.hasRequestQueued()) {
+          return false;
+        }
+        //console.log('gestion cambio', this.$.eltoggle.active)
+        this.set('requestPublic.slug', this.oferta.$key);
+      },
+
+      requestofertaPrivatization: function() {
+        console.log('requestPrivate:', this.requestPrivate)
+        if(this.hasRequestQueued()) {      
+          return false;
+        }
+        //console.log('gestion cambio', this.$.eltoggle.active)
+        this.set('requestPrivate', {
+          slug: this.oferta.$key,
+          publicId: this.oferta.publicId
+        });
+      },
+
+      hasRequestQueued: function() {
+        if((this.requestPrivate && this.requestPrivate.slug) || (this.requestPublic && this.requestPublic.slug)) {
+          this.feedbackNegativo('Ya hay una solicitud encolada');
+          this.marcarToggle(this.oferta);
+          return true;
+        }
+        return false;
+      }
+    });
+  </script>
+</dom-module>

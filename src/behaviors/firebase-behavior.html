@@ -104,6 +104,80 @@ FirebaseBehavior = {
 
   fs__promocionImage: function(uid, archivo) {
     return '/promociones/' + uid + '/' + archivo + '.png';
+  },
+
+ // ofertas_USUARIO
+  fb__ofertasUserAll: function(id) {
+    return '/ofertasUser/' + id;
+  },
+  fb__ofertasUserOne: function(id, key) {
+    return this.fb__ofertasUserAll(id) + '/' + key;
+  },
+  fb_favofertaUser: function(idUser, ofertaLocData) {
+    //console.log('fb_favofertaUser', idUser, ofertaLocData)
+    return '/ofertasUserFavs/' + ofertaLocData.userId + '/' + ofertaLocData.slug + '/' + idUser
+  },
+  fb_favofertaAll: function(ofertaLocData) {
+    //console.log('fb_favofertaAll', '/ofertasUserFavs/' + ofertaLocData.userId + '/' + ofertaLocData.slug)
+    return '/ofertasUserFavs/' + ofertaLocData.userId + '/' + ofertaLocData.slug;
+  },
+
+  // ofertas GLOBALES
+  fb__ofertasAll: function() {
+    return '/ofertas';
+  },
+  fb__ofertasOne: function(id) {
+    return this.fb__ofertasAll() + '/' + id;
+  },
+  fb__numFavs: function(id) {
+    return this.fb__ofertasOne(id) + '/numFavs'
+  },
+
+  // REQUEST oferta PUBLICO
+  fb__requestPublicofertaUser: function(uid) {
+    return '/requestPublicoferta/' + uid;
+  },
+  // REQUEST oferta PRIVADO
+  fb__requestPrivateofertaUser: function(uid) {
+    return '/requestPrivateoferta/' + uid;
+  },
+  // REQUEST SHARE TWITTER
+  fb_twitterShareRequestUser: function(uid) {
+    return '/twitter/shareRequest/' + uid;
+  },
+  // RESPONSE SHARE TWITTER
+  fb_twitterShareResponseUser: function(uid) {
+    return '/twitter/shareResponse/' + uid;
+  },
+
+  // NOTIFICATION REQUEST
+  fb_notificationRequest: function(uid) {
+    return '/notificationRequest/' + uid;
+  },
+
+  // NOTIFICATIONS USERS
+  fb__notificationsUser: function(uid) {
+    return '/notificationsUser/' + uid;
+  },
+  fb__notificationsUserOne: function(iduser, idnotif){
+    return this.fb__notificationsUser(iduser) + '/' + idnotif;
+  },
+
+  // TOKEN DE USUARIO PARA NOTIFICACIONES PUSH
+  fb__notificationTokenUser: function(id) {
+    return '/userTokenPush/' + id + '/token';
+  },
+
+  //una referencia a un punto del storage
+  fbStorageRef: function(ruta) {
+    if(!this.fbapp) {
+      this.fbapp = this.getFbapp();
+    }
+    return this.fbapp.storage().ref(ruta);
+  },
+
+  fs__ofertaImage: function(uid, archivo) {
+    return '/ofertas/' + uid + '/' + archivo + '.png';
   }
 };
 </script>
