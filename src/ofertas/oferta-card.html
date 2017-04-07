@@ -1,0 +1,90 @@
+
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="oferta-fav-count.html">
+
+<dom-module id="oferta-card">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        width: 200px;
+        margin: 10px;
+      }
+      h2 {
+        font-weight: normal;
+        color: var(--primary-color);
+        margin: 0;
+        font-size: 1em;
+      }
+      paper-button span {
+        margin-left: 3px;
+      }
+      @media(min-width: 600px) {
+        :host {
+          width: 250px;
+        }
+      }
+      
+      @media(min-width: 950px) {
+        :host {
+          width: 300px;
+        }
+        h2 {
+          font-size: 1.3em;
+        }
+      }
+      @media(max-width: 650px) {
+        .card-actions {
+          font-size: .9em;
+        }
+      }
+    </style>
+    <firebase-document
+      path="[[locoferta]]"
+      data="{{ofertaData}}"
+    ></firebase-document>
+    
+    <paper-card heading="" image="[[ofertaData.downloadURL]]" elevation="1" animated-shadow="false">
+      <div class="card-content">
+        <a href$="[[urloferta]]" class="linkherit">
+          <h2>[[ofertaData.name]]</h2>
+        </a>
+      </div>
+      <div class="card-actions">
+        <a href$="[[urloferta]]" class="linkherit">
+          <paper-icon-button icon="open-in-browser">
+          </paper-icon-button>
+          <oferta-fav-count
+            count="[[ofertaGlobal.numFavs]]"
+          ></oferta-fav-count>
+        </a>
+      </div>
+    </paper-card>
+    
+  </template>
+  <script>
+    Polymer({
+      is: 'oferta-card',
+      
+      behaviors: [FirebaseBehavior],
+
+      properties: {
+        locoferta: String,
+        ofertaData: Object,
+        ofertaGlobal: Object,
+        urloferta: String
+      },
+
+      observers: ['getLocoferta(ofertaGlobal)'],
+
+      getLocoferta: function(mg) {
+        //console.log('getLocoferta',mg)
+        this.locoferta = this.fb__ofertasUserOne(mg.userId, mg.slug);
+        this.urloferta = '/oferta/' + mg.userId + '/' + mg.slug + '/';
+      },
+
+      
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,90 @@
+
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="promocion-fav-count.html">
+
+<dom-module id="promocion-card">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        width: 200px;
+        margin: 10px;
+      }
+      h2 {
+        font-weight: normal;
+        color: var(--primary-color);
+        margin: 0;
+        font-size: 1em;
+      }
+      paper-button span {
+        margin-left: 3px;
+      }
+      @media(min-width: 600px) {
+        :host {
+          width: 250px;
+        }
+      }
+      
+      @media(min-width: 950px) {
+        :host {
+          width: 300px;
+        }
+        h2 {
+          font-size: 1.3em;
+        }
+      }
+      @media(max-width: 650px) {
+        .card-actions {
+          font-size: .9em;
+        }
+      }
+    </style>
+    <firebase-document
+      path="[[locpromocion]]"
+      data="{{promocionData}}"
+    ></firebase-document>
+    
+    <paper-card heading="" image="[[promocionData.downloadURL]]" elevation="1" animated-shadow="false">
+      <div class="card-content">
+        <a href$="[[urlpromocion]]" class="linkherit">
+          <h2>[[promocionData.name]]</h2>
+        </a>
+      </div>
+      <div class="card-actions">
+        <a href$="[[urlpromocion]]" class="linkherit">
+          <paper-icon-button icon="open-in-browser">
+          </paper-icon-button>
+          <promocion-fav-count
+            count="[[promocionGlobal.numFavs]]"
+          ></promocion-fav-count>
+        </a>
+      </div>
+    </paper-card>
+    
+  </template>
+  <script>
+    Polymer({
+      is: 'promocion-card',
+      
+      behaviors: [FirebaseBehavior],
+
+      properties: {
+        locpromocion: String,
+        promocionData: Object,
+        promocionGlobal: Object,
+        urlpromocion: String
+      },
+
+      observers: ['getLocpromocion(promocionGlobal)'],
+
+      getLocpromocion: function(mg) {
+        //console.log('getLocpromocion',mg)
+        this.locpromocion = this.fb__promocionesUserOne(mg.userId, mg.slug);
+        this.urlpromocion = '/promocion/' + mg.userId + '/' + mg.slug + '/';
+      },
+
+      
+    });
+  </script>
+</dom-module>

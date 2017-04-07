@@ -1,0 +1,104 @@
+
+<dom-module id="oferta-fav-users">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+      imagen-avatar{
+        --avatar-width: 24px;
+        --avatar-height: 24px;
+      }
+      .caja{
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+      }
+      .caja span {
+        margin-left: 10px;
+        font-size: .75em;
+      }
+      .avatares {
+        @apply(--layout-horizontal);
+      }
+    </style>
+    <firebase-query
+      path="[[locFavs]]"
+      data="{{favUsers}}"
+    ></firebase-query>
+    <div class="caja">
+      <div class="avatares">
+        <template is="dom-repeat" items="[[favUsers]]">
+          <imagen-avatar id="[[item.$key]]"></imagen-avatar>
+        </template>
+      </div>
+      <span hidden="[[!displayText]]">[[favUsers.length]] favorito[[esplural(favUsers.length)]] del oferta</span>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'oferta-fav-users',
+
+      behaviors: [FirebaseBehavior],
+
+      properties: {
+        ofertaLocData: Object,
+        locFavs: {
+          type: String,
+          //computed: 'fb_favofertaAll(ofertaLocData)'
+        },
+        favUsers: Array,
+        delay: Object,
+        ofertaData: Object,
+        delay: Object,
+        displayText: {
+          type: Boolean,
+          value: false
+        },
+        delayDisplay: Object
+      },
+
+      observers: [
+        'contadorFavs(favUsers.length)',
+        'ofertaLocDataObserver(ofertaLocData)'
+      ],
+
+      ready: function() {
+        this.delayDisplay = this.async(this.setDisplay, 3000);
+      },
+
+      detached: function() {
+        if(this.delayDisplay) this.cancelAsync(this.delayDisplay);
+      },
+      
+      ofertaLocDataObserver: function(ofertaLocData) {
+        if(ofertaLocData.userId && ofertaLocData.slug){
+          if(this.delay) {
+            this.cancelAsync(this.delay);
+          }
+          this.delay = this.async(this.rewriteLocFavs, 1000);
+        }
+      },
+
+      rewriteLocFavs: function() {
+        this.locFavs = this.fb_favofertaAll(this.ofertaLocData);
+      },
+
+      esplural: function(num) {
+        if(num != 1) {
+          return 's';
+        }
+      },
+
+      contadorFavs: function(len) {
+        if(len > 0) {
+          this.setDisplay();
+        }
+      },
+
+      setDisplay: function() {
+        this.displayText = true;
+      },
+
+    });
+  </script>
+</dom-module>
