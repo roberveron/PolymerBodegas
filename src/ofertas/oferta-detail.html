@@ -189,7 +189,7 @@
       changeNumFavs: function(num) {
         if(this.ofertaData && this.ofertaData.isPublic && this.ofertaData.publicId) {
           //console.log(this.ofertaData.publicId);
-          var refNumFavs = this.fbref(this.fb__numFavs(this.ofertaData.publicId));
+          var refNumFavs = this.fbref(this.fb__numFavsoferta(this.ofertaData.publicId));
           refNumFavs.once('value', function(ss) {
             var numFavs = ss.val();
             if(numFavs) {

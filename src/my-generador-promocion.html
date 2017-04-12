@@ -1,0 +1,134 @@
+<link rel="import" href="generador-promociones/promociones-crud-listado.html">
+<link rel="import" href="generador-promociones/promociones-crud-insertar.html">
+<link rel="import" href="generador-promociones/promociones-crud-editar.html">
+<link rel="import" href="generador-promociones/promociones-crud-borrar.html">
+<link rel="import" href="generador-promociones/promociones-crud-borrar-dialogo.html">
+
+<dom-module id="my-generador-promocion">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+      iron-pages {
+        padding: 15px;
+      }
+      .nosesion {
+        padding: 15px;
+        margin: 10px 50px 0;
+        color: #c33;
+        background-color: #fcc;
+        font-size: .8em;
+        text-align: center;
+        border: 1px solid #ccc;
+      }
+      .nosesion p {
+        margin: 5px;
+      }
+      .nover{
+        display: none;
+      }
+    </style>
+
+    <firebase-query
+      path="[[locpromocionesUser]]"
+      data="{{promocionesUser}}"
+      order-by-child="timestamp"
+    ></firebase-query>
+
+    <div class="contenedor">
+      <app-toolbar>
+        <div main-title>Generar Promocion</div>
+        <paper-icon-button icon="add" on-tap="add" class="onlysmall"></paper-icon-button>
+
+        <paper-button class="onlybig" on-tap="add">
+          <iron-icon icon="add"></iron-icon>
+          <span>Nuevo</span>
+        </paper-button>
+
+      </app-toolbar>
+      
+      <div class="nosesion nover" id="msgsesion" hidden$="[[user]]">
+        <p>
+          Para generar promociones debes iniciar sesión en la aplicación.
+        </p>
+        <p>
+          Inicia sesión con el botón <iron-icon icon="account-circle"></iron-icon> de arriba a la derecha
+        </p>
+      </div>
+
+      <iron-pages selected="{{seccion}}" attr-for-selected="name">
+        <promociones-crud-listado
+          name="listado"
+          promociones-user="[[promocionesUser]]"
+          user="[[user]]"
+        ></promociones-crud-listado>
+        <promociones-crud-insertar
+          id="elinsertar"
+          name="insertar"
+          user="[[user]]"
+        ></promociones-crud-insertar>
+        <promociones-crud-editar
+          id="eleditar"
+          name="editar"
+          user="[[user]]"
+        ></promociones-crud-editar>
+      </iron-pages>
+    </div>
+
+    <promociones-crud-borrar
+      id="elborrar"
+      user="[[user]]"
+    ></promociones-crud-borrar>
+
+
+  </template>
+  <script>
+    Polymer({
+      is: 'my-generador-promocion',
+
+      behaviors: [FirebaseBehavior],
+
+      properties: {
+        user: Object,
+        seccion: {
+          type: String,
+          value: 'listado'
+        },
+        locpromocionesUser: {
+          type: String,
+          computed: 'fb__promocionesUserAll(user.uid)'
+        },
+        promocionesUser: Array,
+        listp: Array
+      },
+
+      listeners: {
+        'volver-listado': 'irListado',
+        'editar-promocion': 'editarpromocion',
+      },
+
+      ready: function() {
+        this.async(this.mostrarMensajeLogueo, 2000);
+      },
+
+      mostrarMensajeLogueo: function() {
+        this.toggleClass('nover', false, this.$.msgsesion);
+      },
+
+      add: function() {
+        this.$.elinsertar.resetItem();
+        this.seccion = 'insertar';
+      },
+
+      irListado: function() {
+        this.seccion = 'listado';
+      },
+
+      editarpromocion: function(e, promocion) {
+        this.$.eleditar.item = promocion;
+        this.seccion = 'editar';
+      },
+    });
+  </script>
+</dom-module>

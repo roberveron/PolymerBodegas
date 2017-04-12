@@ -3,8 +3,8 @@
   "shell": "src/my-app.html",
   "fragments": [
     "src/my-home.html",
-    "src/my-oferta.html",
-    "src/my-promocion.html",
+    "src/my-generador-oferta.html",
+    "src/my-generador-promocion.html",
     "src/my-view404.html"
   ],
   "sourceGlobs": [

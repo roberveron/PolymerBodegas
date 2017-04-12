@@ -189,11 +189,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-icon icon="home"></iron-icon>
             <span>Home</span>
           </a>
-          <a name="oferta" href="/oferta" class="navlink">
+          <a name="oferta" href="/generador-oferta" class="navlink">
             <iron-icon icon="editor:attach-money"></iron-icon>
             <span>Oferta</span>
           </a>
-          <a name="promocion" href="/promocion" class="navlink">
+          <a name="promocion" href="/generador-promocion" class="navlink">
             <iron-icon icon="icons:group-work"></iron-icon>
             <span>Promocion</span>
           </a>
@@ -219,8 +219,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             fallback-selection="view404"
             role="main">
           <my-home user="[[user]]" name="home"></my-home>
-          <my-oferta user="[[user]]" name="oferta"></my-oferta>
-          <my-promocion user="[[user]]" name="promocion"></my-promocion>
+          <my-generador-oferta user="[[user]]" name="generador-oferta"></my-generador-oferta>
+          <my-generador-promocion user="[[user]]" name="generador-promocion"></my-generador-promocion>
+          <my-oferta name="oferta" user="[[user]]" route="[[route]]"></my-oferta>
+          <my-promocion name="promocion" user="[[user]]" route="[[route]]"></my-promocion>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
       </app-header-layout>
