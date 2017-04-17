@@ -206,7 +206,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title><p>[[userData.name]]</p></div>
+            <div main-title><p>[[userData.nombrebodega]]</p></div>
 
             <login-users user="{{user}}" user-data="[[userData]]"></login-users>
             <notification-advisor user="{{user}}"></notification-advisor>
@@ -223,6 +223,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-generador-promocion user="[[user]]" name="generador-promocion"></my-generador-promocion>
           <my-oferta name="oferta" user="[[user]]" route="[[route]]"></my-oferta>
           <my-promocion name="promocion" user="[[user]]" route="[[route]]"></my-promocion>
+          <my-perfil name=perfil user="[[user]]"></my-perfil>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
       </app-header-layout>
