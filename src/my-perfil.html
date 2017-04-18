@@ -29,7 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 500px;
   }
     </style>
-<login-users user="{{user}}" user-data="[[userData]]"></login-users>
+
 
 
     <div class="card">
@@ -50,9 +50,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'my-perfil',
       behaviors: [FirebaseBehavior],
 
-   cancelar: function() {
-        this.fire('volver-listado')
-      },
       insertar: function() {
           this.fbref('users/'+(this.user.uid)).update({
           nombrebodega: this.nombrebodega,
@@ -61,12 +58,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           telefono: this.telefono
       })
       }
-/*    navigator.geolocation.getCurrentPosition(function(position) {
+
+/*        navigator.geolocation.getCurrentPosition(function(position) {
         var marca = document.createElement('google-map-marker');
         marca.setAttribute('latitude', position.coords.latitude);
         marca.setAttribute('longitude', position.coords.longitude);
         console.log(marca)
-    */  });
+   });*/
 
+ });
   </script>
 </dom-module>
