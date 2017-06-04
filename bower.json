@@ -21,7 +21,9 @@
     "paper-button": "PolymerElements/paper-button#^1.0.14",
     "flip-clock": "Granze/flip-clock#^1.2.6",
     "paper-select-or-other": "Meravici/paper-select-or-other#^0.0.5",
-    "google-map": "GoogleWebComponents/google-map#^1.2.0"
+    "google-map": "GoogleWebComponents/google-map#^1.2.0",
+    "neon-animation": "PolymerElements/neon-animation#^2.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.1"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

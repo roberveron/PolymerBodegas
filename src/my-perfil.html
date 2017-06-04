@@ -11,10 +11,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 
-<script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+<!--<link rel="import" href="../bower_components/webcomponentsjs/webcomponents-lite.min.js">-->
 <link rel="import" href="../bower_components/google-map/google-map.html">
 <link rel="import" href="../bower_components/google-map/google-map-marker.html">
 <link rel="import" href="./login/login-users.html">
+
+<link rel="import" href="selector-ciudades.html">
+<link rel="import"  href="geo-localizacion.html">
+
 
 
 <dom-module id="my-perfil">
@@ -31,15 +35,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
 
+ <firebase-query
+      id="query"
+      path="/ciudades"
+      data="{{ciudades}}"
+    ></firebase-query>
+    
+        <geo-localizacion 
+          longitud="{{longitud}}" 
+          latitud="{{latitud}}"
+        ></geo-localizacion>
+
+ <!--   <script>
+        navigator.geolocation.getCurrentPosition(function(position) {
+        var marca = document.createElement('google-map-marker');
+        marca.setAttribute('latitude', position.coords.latitude);
+        marca.setAttribute('longitude', position.coords.longitude);
+
+   }); </script>-->
+
 
     <div class="card">
-
     <paper-input label="Nombre Bodega" value="{{nombrebodega}}"></paper-input>
     <paper-input label="Direccion" value="{{direccion}}"></paper-input>
-    <paper-input label="Ciudad" value="{{ciudad}}"></paper-input>
-    <paper-input label="telefono" value="{{telefono}}"></paper-input>
-    <google-map id="mapa" latitude="-25.5028612" longitude="-57.1164379" fit-to-marker api-key="AIzaSyC73d4bNxsIm0HvFq5GLYsu_tGfF3bJa50">
-    <google-map-marker latitude="-25.5028612" longitude="-57.1164379" draggable="true"></google-map-marker>
+   <selector-ciudades texto = "Ciudades..." items = "[[ciudades]]"></selector-ciudades>
+    <paper-input label="telefono" value="{{telefono}}"></paper-input>  
+    <google-map id="mapa" latitude={{latitud}} longitude={{longitud}} fit-to-marker api-key="AIzaSyC73d4bNxsIm0HvFq5GLYsu_tGfF3bJa50">
+    <google-map-marker latitude={{latitud}} longitude={{longitud}} draggable="true"></google-map-marker>
     </google-map>
     <paper-button on-tap="cancelar">Cancelar</paper-button>
     <paper-button raised on-tap="insertar">Insertar</paper-button>
@@ -52,19 +74,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       insertar: function() {
           this.fbref('users/'+(this.user.uid)).update({
-          nombrebodega: this.nombrebodega,
-          direccion: this.direccion,
-          ciudad: this.ciudad,
-          telefono: this.telefono
+          nombrebodega: '"'+this.nombrebodega+'"',
+          direccion: '"'+this.direccion+'"',
+          //ciudad: '"'+this.ciudades+'"',
+          telefono: this.telefono,
+          latitud: this.latitud,
+          longitud: this.longitud
       })
       }
-
-/*        navigator.geolocation.getCurrentPosition(function(position) {
-        var marca = document.createElement('google-map-marker');
-        marca.setAttribute('latitude', position.coords.latitude);
-        marca.setAttribute('longitude', position.coords.longitude);
-        console.log(marca)
-   });*/
 
  });
   </script>

@@ -1,0 +1,34 @@
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+
+<dom-module id="selector-ciudades">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>  
+
+    <paper-dropdown-menu label="[[texto]]">
+        <paper-listbox slot="dropdown-content">
+        <template is="dom-repeat" items="[[items]]" as="item">
+            <paper-item>[[item.$key]]</paper-item>
+        </template>
+        </paper-listbox>
+    </paper-dropdown-menu>
+    
+    </template>
+    <script>
+        Polymer({
+            is: 'selector-ciudades',
+            properties:{
+              texto:{
+                type: String,
+                value: "Introducir texto..."
+              },
+              items: Object
+            }
+        });
+    </script>
+</dom-module>

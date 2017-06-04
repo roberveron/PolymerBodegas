@@ -1,0 +1,35 @@
+
+<dom-module id="geo-localizacion">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+    </template>
+    <script>
+        Polymer({
+            is: 'geo-localizacion',
+            ready: function() {
+                var that = this;
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        that.latitud = position.coords.latitude;
+                        that.longitud = position.coords.longitude;
+                    });
+            },
+            properties:{
+                latitud: {
+                    type: Number,
+                    value: 0,
+                    notify: true
+                },
+                longitud: {
+                    type: Number,
+                    value: 0,
+                    notify: true
+                }
+            }
+        });
+    </script>
+</dom-module>
