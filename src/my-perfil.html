@@ -35,11 +35,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
 
- <firebase-query
+<!-- <firebase-query
       id="query"
       path="/ciudades"
       data="{{ciudades}}"
-    ></firebase-query>
+    ></firebase-query>-->
     
         <geo-localizacion 
           longitud="{{longitud}}" 
@@ -58,7 +58,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="card">
     <paper-input label="Nombre Bodega" value="{{nombrebodega}}"></paper-input>
     <paper-input label="Direccion" value="{{direccion}}"></paper-input>
-   <selector-ciudades texto = "Ciudades..." items = "[[ciudades]]"></selector-ciudades>
+   <!--<selector-ciudades texto = "Ciudades..." items = "[[ciudades]]"></selector-ciudades>-->
+    <paper-input label="Ciudad" value="{{ciudades}}"></paper-input>
     <paper-input label="telefono" value="{{telefono}}"></paper-input>  
     <google-map id="mapa" latitude={{latitud}} longitude={{longitud}} fit-to-marker api-key="AIzaSyC73d4bNxsIm0HvFq5GLYsu_tGfF3bJa50">
     <google-map-marker latitude={{latitud}} longitude={{longitud}} draggable="true"></google-map-marker>
@@ -76,7 +77,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.fbref('users/'+(this.user.uid)).update({
           nombrebodega: '"'+this.nombrebodega+'"',
           direccion: '"'+this.direccion+'"',
-          //ciudad: '"'+this.ciudades+'"',
+          ciudad: '"'+this.ciudades+'"',
           telefono: this.telefono,
           latitud: this.latitud,
           longitud: this.longitud

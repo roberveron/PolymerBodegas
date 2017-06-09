@@ -163,7 +163,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <firebase-document
       path="{{locUser}}"
       data="{{userData}}"
-    </firebase-document>
+    ></firebase-document>
 
      <notification-push-manager
       id="elpush"
@@ -197,6 +197,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-icon icon="icons:group-work"></iron-icon>
             <span>Promocion</span>
           </a>
+          <a name="ListaPromocion" href="/lista-promocion" class="navlink">
+            <iron-icon icon="icons:view-list"></iron-icon>
+            <span>Listado Promocion</span>
+          <a name="ListaOferta" href="/lista-oferta" class="navlink">
+            <iron-icon icon="icons:line-weight"></iron-icon>
+            <span>Listado Oferta</span>
+          </a>
+          </a>
         </iron-selector>
       </app-drawer>
       
@@ -221,8 +229,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-home user="[[user]]" name="home"></my-home>
           <my-generador-oferta user="[[user]]" name="generador-oferta"></my-generador-oferta>
           <my-generador-promocion user="[[user]]" name="generador-promocion"></my-generador-promocion>
-          <my-oferta name="oferta" user="[[user]]" route="[[route]]"></my-oferta>
-          <my-promocion name="promocion" user="[[user]]" route="[[route]]"></my-promocion>
+          <!--<my-oferta name="oferta" user="[[user]]" route="[[route]]"></my-oferta>-->
+          <my-lista-promocion user="[[user]]" name="lista-promocion"  route="[[route]]"></my-lista-promocion>
+          <my-lista-oferta user="[[user]]" name="lista-oferta" route="[[route]]"></my-lista-oferta>
           <my-perfil name=perfil user="[[user]]"></my-perfil>
           <my-view404 name="view404"></my-view404>
         </iron-pages>

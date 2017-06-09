@@ -131,6 +131,12 @@ FirebaseBehavior = {
     return '/ofertasUserFavs/' + ofertaLocData.userId + '/' + ofertaLocData.slug;
   },
 
+// participa de promociones
+  fb__listaUserAll: function(id) {
+    return '/participaPromocion/' + id;
+  },
+
+
   // ofertas GLOBALES
   fb__ofertasAll: function() {
     return '/ofertas';

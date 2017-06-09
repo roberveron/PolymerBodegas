@@ -6,6 +6,8 @@
     "src/my-generador-oferta.html",
     "src/my-generador-promocion.html",
     "src/my-perfil.html",
+    "src/my-lista-promocion.html",
+    "src/my-lista-oferta.html",
     "src/my-view404.html"
   ],
   "sourceGlobs": [

@@ -1,0 +1,35 @@
+<dom-module id="promocion-item">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+
+       
+        <h3>{{id}}</h3>  
+        <span>{{oferta}}</span>
+        
+        
+       
+    </template>
+    <script>
+        Polymer({
+            is: 'promocion-item',
+            properties:{
+                item: {
+                    type: Object,
+                    observer: "itemChange"
+                },
+                promocion: String,
+                id: String,
+                usuarios: Array
+            },
+            itemChange: function(datos){
+                this.oferta = Object.keys(datos);
+                this.id = datos.$key;
+                this.usuarios = datos[Object.keys(datos)];      
+            }
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,41 @@
+<link rel="import" href="promocion-item.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="promociones-listado">
+    <template>
+        <style is="custom-style" include="iron-flex">
+            :host {
+                display: block;
+            }
+            .flex {
+                @apply --layout-horizontal;
+            }
+            .item{
+                margin: 20px 20px 20px 20px !important;
+            }
+        </style>
+        <div class="container flex">
+            <template is="dom-repeat" items="[[items]]" as="item">
+                <div class="item">
+                    <promocion-item 
+                      item="[[item]]"
+                    ></promocion-item></div>
+            </template>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'promociones-listado',
+            
+            properties:{
+                name: {
+                    type: String,
+                    value: "Listado"
+                },
+                items: Object
+            }
+
+        });
+    </script>
+</dom-module>
