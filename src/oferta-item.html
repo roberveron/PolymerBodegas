@@ -1,4 +1,4 @@
-<dom-module id="promocion-item">
+<dom-module id="oferta-item">
     <template>
         <style>
             :host {
@@ -9,32 +9,29 @@
 <!--        <template is="dom-repeat" items="{{usuarios}}" as="us">
         {{us}}</template>-->
         
-        <h3>{{promocion}}</h3>  
-        <span>{{clientes}}</span>
+        <h3>{{oferta}}</h3>  
+        <span>{{vistas}} Vistas</span>
         
         
        
     </template>
     <script>
         Polymer({
-            is: 'promocion-item',
+            is: 'oferta-item',
             properties:{
                 item: {
                     type: Object,
                     observer: "itemChange"
                 },
-                clientes: String,
-                promocion: String,
+                oferta: String,
+                vistas: String,
                 //usuarios: Array
             },
             itemChange: function(datos){
-                this.clientes = Object.keys(datos);
-                this.promocion = datos.$key;
+                this.vistas = datos.views;
+                this.oferta = datos.$key;
                 //this.usuarios = datos[Object.keys(datos)];   
-              /*  var array = datos[Object.keys(datos)];                
-                for (var item in array){                                     
-                    console.log(item);
-                }*/   
+  
             }
         });
     </script>

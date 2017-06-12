@@ -1,7 +1,7 @@
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
-
+<link rel="import" href="ofertas-listado.html">
 
 <dom-module id="my-lista-oferta">
   <template>
@@ -28,11 +28,7 @@
       .nover{
         display: none;
       }
-    </style>
-
-    
-
-      
+    </style>      
       <div class="nosesion nover" id="msgsesion" hidden$="[[user]]">
         <p>
           Para listar Promociones debes iniciar sesión en la aplicación.
@@ -42,7 +38,19 @@
         </p>
       </div>
 
+    <h1>Listado de Ofertas y Cantidad de Views</h1>
+    
+    <div class="card">
+      <firebase-query
+        path="/ofertasUser/{{user.uid}}"
+        data="{{oferta}}"
+      ></firebase-query>
 
+      <ofertas-listado
+        name="Ofertas"
+        items="{{oferta}}"
+      ></ofertas-listado>
+    </div>
 
 
   </template>

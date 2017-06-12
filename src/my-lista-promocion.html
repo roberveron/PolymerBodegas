@@ -39,15 +39,14 @@
           Inicia sesión con el botón <iron-icon icon="account-circle"></iron-icon> de arriba a la derecha
         </p>
       </div>
-
-    <div class="card">
- 
       
+      <h1>Listado De Promociones y Participantes</h1>
+    
+    <div class="card">
       <firebase-query
         path="/participaPromocion/{{user.uid}}"
         data="{{promocion}}"
       ></firebase-query>
-
 
       <promociones-listado
         name="Promociones"
