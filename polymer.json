@@ -8,6 +8,7 @@
     "src/my-perfil.html",
     "src/my-lista-promocion.html",
     "src/my-lista-oferta.html",
+    "src/my-ayuda.html",    
     "src/my-view404.html"
   ],
   "sourceGlobs": [
